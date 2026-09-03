@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ระบบคำนวณการปรับลดราคาค่างานก่อสร้าง ตามหนังสือ ว651</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Prompt & Sarabun Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Prompt', sans-serif;
+            background-color: #f3f4f6;
+        }
+        
+        .sarabun {
+            font-family: 'Sarabun', sans-serif;
+        }
+
+        /* Print Specific Styles */
+        @media print {
+            body {
+                background-color: #ffffff;
+                color: #000000;
+                font-family: 'Sarabun', sans-serif !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .print-only {
+                display: block !important;
+            }
+            .page-break {
+                page-break-before: always;
+            }
+            .print-container {
+                box-shadow: none !important;
+                border: none !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                width: 100% !important;
+                max-width: none !important;
+            }
+            @page {
+                size: A4 landscape;
+                margin: 15mm 10mm 15mm 10mm;
+            }
+            th, td {
+                font-size: 11px !important;
+                padding: 4px 3px !important;
+            }
+        }
+
+        .print-only {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen text-gray-800 pb-12">
+
+    <!-- Top Navigation Bar (Hidden in Print) -->
+    <header class="no-print bg-indigo-700 text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center space-x-3">
+                <i class="fa-solid fa-file-contract text-2xl text-yellow-300"></i>
+                <div>
+                    <h1 class="text-xl font-bold leading-tight">ระบบคำนวณปรับลดราคาค่างานก่อสร้าง</h1>
+                    <p class="text-xs text-indigo-200">ตามหนังสือเวียน กวจ. ด่วนที่สุด ที่ ศธ 04002/ว 651</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-3">
+                <button onclick="window.print()" class="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-lg font-medium shadow flex items-center gap-2 transition duration-200">
+                    <i class="fa-solid fa-print"></i> พิมพ์เอกสาร / Export PDF
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 py-6">
+
+        <!-- FORM EDITING SECTION (Hidden when printing) -->
+        <div class="no-print space-y-6">
+
+            <!-- Card 1: Project & Contract Info -->
+            <div class="bg-white rounded-xl shadow-md p-6 border border-gray-200">
+                <h2 class="text-lg font-bold text-indigo-800 border-b pb-3 mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-circle-info text-indigo-600"></i> 1. ข้อมูลสัญญาและรายละเอียดตามหนังสือ ว651
+                </h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">ชื่อโครงการก่อสร้าง</label>
+                        <input type="text" id="projectName" value="โครงการก่อสร้างอาคารเรียนและปฏิบัติการ" class="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">สัญญาเลขที่ / ข้อตกลงเลขที่</label>
+                        <input type="text" id="contractNo" value="12/2566" class="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">วันที่ทำสัญญา</label>
+                        <input type="date" id="contractDate" value="2023-05-15" class="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">ชื่อผู้ว่าจ้าง / หน่วยงาน</label>
+                        <input type="text" id="employerName" value="โรงเรียนวิทยาพัฒนา" class="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">ชื่อผู้รับจ้าง / บริษัท</label>
+                        <input type="text" id="contractorName" value="บริษัท บิลเดอร์คอนสตรัคชั่น จำกัด" class="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">วงเงินตามสัญญาเดิม (บาท)</label>
+                        <input type="number" id="originalContractAmount" value="5000000" onchange="calculateAll()" class="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none font-semibold text-indigo-900">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">วันสิ้นสุดสัญญาเดิม</label>
+                        <input type="date" id="originalEndDate" value="2023-11-15" onchange="calculateDates()" class="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">วันที่อนุญาตเข้าพื้นที่ / ส่งมอบได้</label>
+                        <input type="date" id="actualHandoverDate" value="2023-12-15" onchange="calculateDates()" class="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">จำนวนวันที่ล่าช้า (วัน)</label>
+                        <input type="number" id="delayDays" value="30" readonly class="w-full p-2.5 bg-gray-100 border border-gray-300 rounded-lg text-gray-600 font-semibold">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">อัตราค่าปรับต่อวัน (%)</label>
+                        <input type="number" step="0.01" id="fineRatePercent" value="0.10" onchange="calculateAll()" class="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">ค่าปรับต่อวัน (บาท)</label>
+                        <input type="number" id="finePerDay" readonly class="w-full p-2.5 bg-gray-100 border border-gray-300 rounded-lg text-gray-600 font-semibold">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">รวมค่าปรับงวดล่าช้าทั้งหมด (บาท)</label>
+                        <input type="number" id="totalFineAmount" readonly class="w-full p-2.5 bg-gray-100 border border-gray-300 rounded-lg text-indigo-700 font-bold">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2: BOQ Reduction Form -->
+            <div class="bg-white rounded-xl shadow-md p-6 border border-gray-200">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b pb-3 mb-4 gap-2">
+                    <div>
+                        <h2 class="text-lg font-bold text-indigo-800 flex items-center gap-2">
+                            <i class="fa-solid fa-list-check text-indigo-600"></i> 2. บัญชีแสดงรายการปริมาณงานและราคา (BOQ)
+                        </h2>
+                        <p class="text-xs text-gray-500">กรอกรายการปรับลดปริมาณ/ค่างานก่อสร้าง ตามแบบฟอร์มหนังสือ ว 651</p>
+                    </div>
+                    <button onclick="addBoqRow()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1.5 rounded-lg text-sm font-medium flex items-center gap-1.5 transition">
+                        <i class="fa-solid fa-plus"></i> เพิ่มรายการ
+                    </button>
+                </div>
+
+                <!-- BOQ Table Input -->
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm border-collapse" id="boqInputTable">
+                        <thead>
+                            <tr class="bg-gray-100 border-b border-gray-300 text-gray-700">
+                                <th class="p-2.5 w-12 text-center">ลำดับ</th>
+                                <th class="p-2.5 min-w-[200px]">รายการงานก่อสร้าง</th>
+                                <th class="p-2.5 w-20 text-center">หน่วย</th>
+                                <th class="p-2.5 w-24 text-center">ปริมาณเดิม</th>
+                                <th class="p-2.5 w-28 text-right">ราคา/หน่วย เดิม</th>
+                                <th class="p-2.5 w-24 text-center">ปริมาณใหม่</th>
+                                <th class="p-2.5 w-28 text-right">ราคา/หน่วย ใหม่</th>
+                                <th class="p-2.5 w-32 text-right">ส่วนต่างปรับลด (บาท)</th>
+                                <th class="p-2.5 w-12 text-center">ลบ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="boqTableBody" class="divide-y divide-gray-200">
+                            <!-- Rows generated by JS -->
+                        </tbody>
+                        <tfoot>
+                            <tr class="bg-indigo-50 font-bold text-indigo-900 border-t-2 border-indigo-200">
+                                <td colspan="7" class="p-3 text-right">รวมเงินค่างานที่ปรับลดลงทั้งสิ้น (บาท):</td>
+                                <td class="p-3 text-right text-base text-red-600" id="totalReductionCell">0.00</td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Card 3: Summary & W651 Percentage Verification -->
+            <div class="bg-white rounded-xl shadow-md p-6 border border-gray-200">
+                <h2 class="text-lg font-bold text-indigo-800 border-b pb-3 mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-percent text-indigo-600"></i> 3. สรุปผลการปรับลดราคาและสัดส่วนเปอร์เซ็นต์ตาม ว651
+                </h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                    <div class="bg-blue-50 p-4 rounded-xl border border-blue-200">
+                        <p class="text-xs text-blue-600 font-semibold uppercase">วงเงินสัญญาเดิม</p>
+                        <p class="text-xl font-bold text-blue-900 mt-1" id="summaryOriginal">0.00 บาท</p>
+                    </div>
+
+                    <div class="bg-red-50 p-4 rounded-xl border border-red-200">
+                        <p class="text-xs text-red-600 font-semibold uppercase">จำนวนเงินที่ปรับลดลง</p>
+                        <p class="text-xl font-bold text-red-600 mt-1" id="summaryReduction">0.00 บาท</p>
+                    </div>
+
+                    <div class="bg-amber-50 p-4 rounded-xl border border-amber-200">
+                        <p class="text-xs text-amber-700 font-semibold uppercase">สัดส่วนที่ปรับลด (%)</p>
+                        <p class="text-xl font-bold text-amber-800 mt-1" id="summaryPercent">0.00%</p>
+                    </div>
+
+                    <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-200">
+                        <p class="text-xs text-emerald-600 font-semibold uppercase">วงเงินสัญญาหลังปรับลดสุทธิ</p>
+                        <p class="text-xl font-bold text-emerald-700 mt-1" id="summaryNewContract">0.00 บาท</p>
+                    </div>
+                </div>
+
+                <!-- W651 Rule Criteria Checklist -->
+                <div class="bg-indigo-50 border border-indigo-200 rounded-lg p-4">
+                    <h3 class="font-bold text-indigo-900 text-sm mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-shield-halved text-indigo-600"></i> การตรวจสอบการปรับลดราคาสัญญาตาม ว651:
+                    </h3>
+                    <div class="text-xs text-indigo-950 space-y-1">
+                        <p>• <strong>สัดส่วนการปรับลดค่างาน:</strong> คิดเป็น <span id="rulePercentText" class="font-bold text-red-600">0.00%</span> ของวงเงินสัญญาเดิม</p>
+                        <p>• <strong>เปรียบเทียบกับค่าปรับงวดล่าช้า:</strong> ค่าปรับล่าช้ารวม <span id="ruleFineText" class="font-bold">0.00</span> บาท | ปรับลดค่างานรวม <span id="ruleReducText" class="font-bold">0.00</span> บาท</p>
+                        <p id="ruleStatusBadge" class="mt-2 font-medium text-sm"></p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- PRINTABLE FORM SECTION (Sarabun Font - Exact Layout W651) -->
+        <div id="printSection" class="bg-white p-6 sm:p-10 shadow-xl border rounded-xl max-w-6xl mx-auto sarabun text-black text-sm print-container mt-8">
+            
+            <!-- Document Title -->
+            <div class="text-center mb-4">
+                <h3 class="text-lg font-bold mb-0.5">แบบบัญชีแสดงรายการปริมาณงานและราคาที่ปรับลดลง (BOQ)</h3>
+                <p class="text-xs text-gray-700">แนบท้ายบันทึกความตกลงแก้ไขเพิ่มเติมสัญญา ตามหนังสือเวียน กวจ. ด่วนที่สุด ที่ ศธ 04002/ว 651</p>
+            </div>
+
+            <!-- Header Info Details -->
+            <div class="border border-black p-3 mb-4 text-xs leading-relaxed">
+                <div class="grid grid-cols-2 gap-x-4 gap-y-1">
+                    <div><strong>โครงการ:</strong> <span id="printProjectName">-</span></div>
+                    <div><strong>สัญญาเลขที่:</strong> <span id="printContractNo">-</span></div>
+                    <div><strong>ผู้ว่าจ้าง:</strong> <span id="printEmployerName">-</span></div>
+                    <div><strong>ผู้รับจ้าง:</strong> <span id="printContractorName">-</span></div>
+                    <div><strong>วันที่ทำสัญญา:</strong> <span id="printContractDate">-</span></div>
+                    <div><strong>วงเงินสัญญาเดิม:</strong> <span id="printOriginalAmount">-</span> บาท</div>
+                    <div><strong>วันสิ้นสุดสัญญาเดิม:</strong> <span id="printOriginalEndDate">-</span></div>
+                    <div><strong>วันที่ส่งมอบ/อนุญาตเข้าพื้นที่:</strong> <span id="printActualHandoverDate">-</span> (ล่าช้า <span id="printDelayDays">0</span> วัน)</div>
+                </div>
+            </div>
+
+            <!-- BOQ Printable Table - Exact Layout W651 -->
+            <div class="mb-4 overflow-x-auto">
+                <table class="w-full text-xs border-collapse border border-black text-center">
+                    <thead>
+                        <!-- Header Row 1 -->
+                        <tr class="bg-gray-100">
+                            <th rowspan="2" class="border border-black p-2 w-8">ลำดับ</th>
+                            <th rowspan="2" class="border border-black p-2 text-left">รายการ</th>
+                            <th rowspan="2" class="border border-black p-2 w-10">หน่วย</th>
+                            <th colspan="3" class="border border-black p-1">ตามสัญญาเดิม</th>
+                            <th colspan="3" class="border border-black p-1">ที่ปรับลดลง</th>
+                            <th colspan="2" class="border border-black p-1">ส่วนต่างที่ปรับลดลง</th>
+                        </tr>
+                        <!-- Header Row 2 -->
+                        <tr class="bg-gray-100">
+                            <th class="border border-black p-1 w-12">จำนวน</th>
+                            <th class="border border-black p-1 w-16">ราคา/หน่วย</th>
+                            <th class="border border-black p-1 w-20">จำนวนเงิน</th>
+                            <th class="border border-black p-1 w-12">จำนวน</th>
+                            <th class="border border-black p-1 w-16">ราคา/หน่วย</th>
+                            <th class="border border-black p-1 w-20">จำนวนเงิน</th>
+                            <th class="border border-black p-1 w-20">จำนวนเงิน (บาท)</th>
+                            <th class="border border-black p-1 w-12">ร้อยละ (%)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="printBoqBody">
+                        <!-- Dynamic BOQ rows -->
+                    </tbody>
+                    <tfoot>
+                        <tr class="font-bold bg-gray-50">
+                            <td colspan="3" class="border border-black p-2 text-right">รวมเงินทั้งสิ้น:</td>
+                            <td colspan="3" class="border border-black p-2 text-right" id="printTotalOrigAmount">0.00</td>
+                            <td colspan="3" class="border border-black p-2 text-right" id="printTotalNewAmount">0.00</td>
+                            <td class="border border-black p-2 text-right text-red-700" id="printTotalDiffAmount">0.00</td>
+                            <td class="border border-black p-2 text-right" id="printTotalDiffPercent">0.00%</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <!-- Financial & Percentage Summary Box -->
+            <div class="border border-black p-3 rounded mb-6 text-xs space-y-1 bg-gray-50">
+                <div class="flex justify-between">
+                    <span>1. วงเงินตามสัญญาเดิม:</span>
+                    <span class="font-semibold"><span id="printSummaryOrig">0.00</span> บาท</span>
+                </div>
+                <div class="flex justify-between text-red-700">
+                    <span>2. รวมจำนวนเงินค่างานที่ปรับลดลง (ตามหลักเกณฑ์ ว 651):</span>
+                    <span class="font-semibold">- <span id="printSummaryReduc">0.00</span> บาท</span>
+                </div>
+                <div class="flex justify-between text-indigo-900">
+                    <span>3. คิดเป็นร้อยละที่ปรับลดลงเมื่อเทียบกับวงเงินสัญญาเดิม:</span>
+                    <span class="font-semibold"><span id="printSummaryPercent">0.00</span> %</span>
+                </div>
+                <hr class="border-gray-400 my-1">
+                <div class="flex justify-between font-bold text-sm text-black">
+                    <span>4. วงเงินคงเหลือตามสัญญาใหม่สุทธิ:</span>
+                    <span class="underline double"><span id="printSummaryNew">0.00</span> บาท</span>
+                </div>
+            </div>
+
+            <!-- Signatures Section -->
+            <div class="mt-8 pt-2 text-xs grid grid-cols-2 gap-8 text-center leading-loose">
+                <div>
+                    <p>ลงชื่อ..........................................................ผู้ว่าจ้าง</p>
+                    <p>(<span id="printSignEmployer">..........................................................</span>)</p>
+                    <p>ตำแหน่ง..........................................................</p>
+                </div>
+                <div>
+                    <p>ลงชื่อ..........................................................ผู้รับจ้าง</p>
+                    <p>(<span id="printSignContractor">..........................................................</span>)</p>
+                    <p>ตำแหน่ง..........................................................</p>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- JavaScript logic -->
+    <script>
+        // Sample initial BOQ items
+        let boqItems = [
+            { id: 1, name: 'งานเทคอนกรีตพื้นโครงสร้างชั้นล่าง', unit: 'ตร.ม.', origQty: 120, origRate: 450, newQty: 100, newRate: 350 },
+            { id: 2, name: 'งานติดตั้งฝ้าเพดานยิปซัมบอร์ด', unit: 'ตร.ม.', origQty: 80, origRate: 320, newQty: 80, newRate: 280 },
+            { id: 3, name: 'งานทาสีอาคารภายนอกชนิดพิเศษ', unit: 'เหมา', origQty: 1, origRate: 45000, newQty: 1, newRate: 20000 }
+        ];
+
+        // Format Currency Helper
+        function formatMoney(num) {
+            return new Number(num).toLocaleString('th-TH', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+
+        // Format Date Helper
+        function formatDateThai(dateStr) {
+            if (!dateStr) return '-';
+            const d = new Date(dateStr);
+            if (isNaN(d.getTime())) return dateStr;
+            const thMonths = ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'];
+            return `${d.getDate()} ${thMonths[d.getMonth()]} ${d.getFullYear() + 543}`;
+        }
+
+        // Render BOQ Input Table
+        function renderBoqInputs() {
+            const tbody = document.getElementById('boqTableBody');
+            tbody.innerHTML = '';
+
+            boqItems.forEach((item, index) => {
+                const origTotal = item.origQty * item.origRate;
+                const newTotal = item.newQty * item.newRate;
+                const diffTotal = Math.max(0, origTotal - newTotal);
+
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-gray-50 border-b border-gray-200";
+                tr.innerHTML = `
+                    <td class="p-2 text-center font-medium text-gray-500">${index + 1}</td>
+                    <td class="p-2">
+                        <input type="text" value="${item.name}" onchange="updateBoqItem(${item.id}, 'name', this.value)" class="w-full p-1.5 border border-gray-300 rounded focus:ring-1 focus:ring-indigo-500">
+                    </td>
+                    <td class="p-2">
+                        <input type="text" value="${item.unit}" onchange="updateBoqItem(${item.id}, 'unit', this.value)" class="w-full p-1.5 border border-gray-300 rounded text-center focus:ring-1 focus:ring-indigo-500">
+                    </td>
+                    <td class="p-2">
+                        <input type="number" value="${item.origQty}" onchange="updateBoqItem(${item.id}, 'origQty', this.value)" class="w-full p-1.5 border border-gray-300 rounded text-center focus:ring-1 focus:ring-indigo-500">
+                    </td>
+                    <td class="p-2">
+                        <input type="number" value="${item.origRate}" onchange="updateBoqItem(${item.id}, 'origRate', this.value)" class="w-full p-1.5 border border-gray-300 rounded text-right focus:ring-1 focus:ring-indigo-500">
+                    </td>
+                    <td class="p-2">
+                        <input type="number" value="${item.newQty}" onchange="updateBoqItem(${item.id}, 'newQty', this.value)" class="w-full p-1.5 border border-gray-300 rounded text-center focus:ring-1 focus:ring-indigo-500">
+                    </td>
+                    <td class="p-2">
+                        <input type="number" value="${item.newRate}" onchange="updateBoqItem(${item.id}, 'newRate', this.value)" class="w-full p-1.5 border border-gray-300 rounded text-right focus:ring-1 focus:ring-indigo-500">
+                    </td>
+                    <td class="p-2 text-right font-semibold text-red-600">
+                        ${formatMoney(diffTotal)}
+                    </td>
+                    <td class="p-2 text-center">
+                        <button onclick="removeBoqRow(${item.id})" class="text-red-500 hover:text-red-700 p-1">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            calculateAll();
+        }
+
+        // Add BOQ Row
+        function addBoqRow() {
+            const newId = boqItems.length > 0 ? Math.max(...boqItems.map(i => i.id)) + 1 : 1;
+            boqItems.push({
+                id: newId,
+                name: 'รายการงานก่อสร้างใหม่',
+                unit: 'งาน',
+                origQty: 1,
+                origRate: 0,
+                newQty: 1,
+                newRate: 0
+            });
+            renderBoqInputs();
+        }
+
+        // Remove BOQ Row
+        function removeBoqRow(id) {
+            boqItems = boqItems.filter(item => item.id !== id);
+            renderBoqInputs();
+        }
+
+        // Update BOQ Item Value
+        function updateBoqItem(id, key, val) {
+            const item = boqItems.find(i => i.id === id);
+            if (item) {
+                if (['origQty', 'origRate', 'newQty', 'newRate'].includes(key)) {
+                    item[key] = parseFloat(val) || 0;
+                } else {
+                    item[key] = val;
+                }
+            }
+            renderBoqInputs();
+        }
+
+        // Calculate Handover Delays
+        function calculateDates() {
+            const origEnd = new Date(document.getElementById('originalEndDate').value);
+            const actualEnd = new Date(document.getElementById('actualHandoverDate').value);
+
+            if (!isNaN(origEnd) && !isNaN(actualEnd) && actualEnd > origEnd) {
+                const diffTime = Math.abs(actualEnd - origEnd);
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                document.getElementById('delayDays').value = diffDays;
+            } else {
+                document.getElementById('delayDays').value = 0;
+            }
+            calculateAll();
+        }
+
+        // Calculate overall totals & Percentages
+        function calculateAll() {
+            const contractAmt = parseFloat(document.getElementById('originalContractAmount').value) || 0;
+            const delayDays = parseFloat(document.getElementById('delayDays').value) || 0;
+            const fineRatePct = parseFloat(document.getElementById('fineRatePercent').value) || 0;
+
+            // Calculate Fine
+            const finePerDay = contractAmt * (fineRatePct / 100);
+            const totalFine = finePerDay * delayDays;
+
+            document.getElementById('finePerDay').value = finePerDay.toFixed(2);
+            document.getElementById('totalFineAmount').value = totalFine.toFixed(2);
+
+            // Calculate BOQ Totals
+            let totalOrigBOQ = 0;
+            let totalNewBOQ = 0;
+            let totalReduction = 0;
+
+            boqItems.forEach(item => {
+                const origTotal = item.origQty * item.origRate;
+                const newTotal = item.newQty * item.newRate;
+                const diff = Math.max(0, origTotal - newTotal);
+
+                totalOrigBOQ += origTotal;
+                totalNewBOQ += newTotal;
+                totalReduction += diff;
+            });
+
+            const newContractAmt = contractAmt - totalReduction;
+            const reductionPercent = contractAmt > 0 ? (totalReduction / contractAmt) * 100 : 0;
+
+            // Update UI Summaries
+            document.getElementById('totalReductionCell').innerText = formatMoney(totalReduction);
+            document.getElementById('summaryOriginal').innerText = `${formatMoney(contractAmt)} บาท`;
+            document.getElementById('summaryReduction').innerText = `${formatMoney(totalReduction)} บาท`;
+            document.getElementById('summaryPercent').innerText = `${reductionPercent.toFixed(2)} %`;
+            document.getElementById('summaryNewContract').innerText = `${formatMoney(newContractAmt)} บาท`;
+
+            // W651 Rule Check text
+            document.getElementById('rulePercentText').innerText = `${reductionPercent.toFixed(2)}%`;
+            document.getElementById('ruleFineText').innerText = formatMoney(totalFine);
+            document.getElementById('ruleReducText').innerText = formatMoney(totalReduction);
+
+            const statusBadge = document.getElementById('ruleStatusBadge');
+            if (totalReduction >= totalFine) {
+                statusBadge.className = "mt-2 p-2 bg-emerald-100 text-emerald-800 rounded font-semibold flex items-center gap-2";
+                statusBadge.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-600"></i> สรุป: จำนวนเงินที่ปรับลดลงครอบคลุมค่าปรับงวดล่าช้าทั้งหมด (${formatMoney(totalReduction)} >= ${formatMoney(totalFine)} บาท)`;
+            } else {
+                statusBadge.className = "mt-2 p-2 bg-amber-100 text-amber-800 rounded font-semibold flex items-center gap-2";
+                statusBadge.innerHTML = `<i class="fa-solid fa-triangle-exclamation text-amber-600"></i> ข้อสังเกต: จำนวนเงินที่ปรับลดลงน้อยกว่าค่าปรับล่าช้ารวม (ต่างกัน ${formatMoney(totalFine - totalReduction)} บาท)`;
+            }
+
+            // Update Printable View
+            updatePrintView(contractAmt, totalReduction, newContractAmt, totalFine, fineRatePct, reductionPercent, totalOrigBOQ, totalNewBOQ);
+        }
+
+        // Synchronize values to Printable Preview Form (Exact W651 Layout)
+        function updatePrintView(contractAmt, totalReduction, newContractAmt, totalFine, fineRatePct, reductionPercent, totalOrigBOQ, totalNewBOQ) {
+            document.getElementById('printProjectName').innerText = document.getElementById('projectName').value || '-';
+            document.getElementById('printContractNo').innerText = document.getElementById('contractNo').value || '-';
+            document.getElementById('printEmployerName').innerText = document.getElementById('employerName').value || '-';
+            document.getElementById('printContractorName').innerText = document.getElementById('contractorName').value || '-';
+            document.getElementById('printContractDate').innerText = formatDateThai(document.getElementById('contractDate').value);
+            document.getElementById('printOriginalAmount').innerText = formatMoney(contractAmt);
+
+            document.getElementById('printOriginalEndDate').innerText = formatDateThai(document.getElementById('originalEndDate').value);
+            document.getElementById('printActualHandoverDate').innerText = formatDateThai(document.getElementById('actualHandoverDate').value);
+            document.getElementById('printDelayDays').innerText = document.getElementById('delayDays').value;
+
+            // Render Printable BOQ Table Rows (W651 Standard Columns)
+            const printBody = document.getElementById('printBoqBody');
+            printBody.innerHTML = '';
+
+            boqItems.forEach((item, index) => {
+                const origTotal = item.origQty * item.origRate;
+                const newTotal = item.newQty * item.newRate;
+                const diffTotal = Math.max(0, origTotal - newTotal);
+                const itemDiffPct = origTotal > 0 ? (diffTotal / origTotal) * 100 : 0;
+
+                const tr = document.createElement('tr');
+                tr.className = "border-b border-black";
+                tr.innerHTML = `
+                    <td class="border border-black p-1 text-center">${index + 1}</td>
+                    <td class="border border-black p-1 text-left">${item.name}</td>
+                    <td class="border border-black p-1 text-center">${item.unit}</td>
+                    
+                    <!-- Original Contract -->
+                    <td class="border border-black p-1 text-center">${item.origQty}</td>
+                    <td class="border border-black p-1 text-right">${formatMoney(item.origRate)}</td>
+                    <td class="border border-black p-1 text-right font-medium">${formatMoney(origTotal)}</td>
+                    
+                    <!-- Adjusted Contract -->
+                    <td class="border border-black p-1 text-center">${item.newQty}</td>
+                    <td class="border border-black p-1 text-right">${formatMoney(item.newRate)}</td>
+                    <td class="border border-black p-1 text-right font-medium">${formatMoney(newTotal)}</td>
+                    
+                    <!-- Difference -->
+                    <td class="border border-black p-1 text-right font-bold text-black">${formatMoney(diffTotal)}</td>
+                    <td class="border border-black p-1 text-right">${itemDiffPct.toFixed(2)}%</td>
+                `;
+                printBody.appendChild(tr);
+            });
+
+            document.getElementById('printTotalOrigAmount').innerText = formatMoney(totalOrigBOQ);
+            document.getElementById('printTotalNewAmount').innerText = formatMoney(totalNewBOQ);
+            document.getElementById('printTotalDiffAmount').innerText = formatMoney(totalReduction);
+            document.getElementById('printTotalDiffPercent').innerText = `${reductionPercent.toFixed(2)}%`;
+
+            document.getElementById('printSummaryOrig').innerText = formatMoney(contractAmt);
+            document.getElementById('printSummaryReduc').innerText = formatMoney(totalReduction);
+            document.getElementById('printSummaryPercent').innerText = reductionPercent.toFixed(2);
+            document.getElementById('printSummaryNew').innerText = formatMoney(newContractAmt);
+
+            document.getElementById('printSignEmployer').innerText = document.getElementById('employerName').value || '..........................................................';
+            document.getElementById('printSignContractor').innerText = document.getElementById('contractorName').value || '..........................................................';
+        }
+
+        // Add Real-time Event Listeners for inputs
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('input', calculateAll);
+        });
+
+        // Initialize on Load
+        window.onload = function() {
+            calculateDates();
+            renderBoqInputs();
+        };
+    </script>
+</body>
+</html>
