@@ -46,12 +46,12 @@
                 max-width: none !important;
             }
             @page {
-                size: A4 landscape;
-                margin: 12mm 8mm 12mm 8mm;
+                size: A4 portrait;
+                margin: 10mm 10mm 10mm 10mm;
             }
             th, td {
-                font-size: 10px !important;
-                padding: 3px 2px !important;
+                font-size: 11px !important;
+                padding: 4px 3px !important;
             }
         }
 
@@ -92,51 +92,54 @@
                 </h2>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
-                    <div>
+                    <div class="md:col-span-2">
                         <label class="block text-sm font-medium text-gray-700 mb-1">ชื่อโครงการก่อสร้าง</label>
-                        <input type="text" id="projectName" value="โครงการก่อสร้างอาคารเรียนและปฏิบัติการ" oninput="calculateAll()" class="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                        <input type="text" id="projectName" value="งานก่อสร้างอาคารสำนักงานกรมกก่อไก่" oninput="calculateAll()" class="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">ประเภทของงานก่อสร้าง</label>
                         <select id="workType" onchange="calculateAll()" class="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none bg-white font-medium">
-                            <option value="งานอาคาร">งานอาคาร</option>
-                            <option value="งานทาง">งานทาง</option>
-                            <option value="งานสะพานและท่อเหลี่ยม">งานสะพานและท่อเหลี่ยม</option>
+                            <option value="งานก่อสร้างอาคาร">งานก่อสร้างอาคาร</option>
+                            <option value="งานก่อสร้างทาง สะพาน และท่อเหลี่ยม">งานก่อสร้างทาง สะพาน และท่อเหลี่ยม</option>
                             <option value="งานชลประทาน">งานชลประทาน</option>
                         </select>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">สัญญาเลขที่ / ข้อตกลงเลขที่</label>
-                        <input type="text" id="contractNo" value="12/2569" oninput="calculateAll()" class="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">เลขที่โครงการ / E-GP</label>
+                        <input type="text" id="projectNo" value="68049099091" oninput="calculateAll()" class="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">วันที่ทำสัญญา</label>
-                        <input type="date" id="contractDate" value="2026-10-01" onchange="calculateAll()" class="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">สัญญา/ข้อตกลงเลขที่</label>
+                        <input type="text" id="contractNo" value="1/2568" oninput="calculateAll()" class="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">ลงวันที่</label>
+                        <input type="date" id="contractDate" value="2025-09-30" onchange="calculateAll()" class="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
                     </div>
 
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">ชื่อผู้ว่าจ้าง / หน่วยงาน</label>
-                        <input type="text" id="employerName" value="โรงเรียนวิทยาพัฒนา" oninput="calculateAll()" class="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">หน่วยงานเจ้าของโครงการ</label>
+                        <input type="text" id="employerName" value="กรมกก่อไก่" oninput="calculateAll()" class="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">ชื่อผู้รับจ้าง / บริษัท</label>
-                        <input type="text" id="contractorName" value="บริษัท บิลเดอร์คอนสตรัคชั่น จำกัด" oninput="calculateAll()" class="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                    </div>
-                    <div class="md:col-span-2">
-                        <label class="block text-sm font-medium text-gray-700 mb-1">วันสิ้นสุดสัญญาเดิม</label>
-                        <input type="date" id="originalEndDate" value="2027-03-30" onchange="calculateAll()" class="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                        <input type="text" id="contractorName" value="บริษัท ก่อสร้างอาคาร จำกัด" oninput="calculateAll()" class="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
                     </div>
                 </div>
 
                 <!-- Price inputs according to W651 -->
-                <div class="bg-indigo-50 p-4 rounded-xl border border-indigo-200 grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-indigo-50 p-4 rounded-xl border border-indigo-200 grid grid-cols-1 md:grid-cols-4 gap-4">
                     <div>
-                        <label class="block text-sm font-bold text-indigo-900 mb-1">ราคากลางงานก่อสร้างรวม (บาท)</label>
-                        <input type="number" step="0.01" id="totalMedianPrice" value="5000000" oninput="calculateAll()" onchange="calculateAll()" class="w-full p-2.5 border border-indigo-300 rounded-lg focus:ring-2 focus:ring-indigo-500 text-indigo-900 font-bold text-lg">
+                        <label class="block text-sm font-bold text-indigo-900 mb-1">วงเงินงบประมาณ (บาท)</label>
+                        <input type="number" step="0.01" id="budgetAmount" value="27000000" oninput="calculateAll()" class="w-full p-2.5 border border-indigo-300 rounded-lg focus:ring-2 focus:ring-indigo-500 text-indigo-900 font-bold text-lg">
                     </div>
                     <div>
-                        <label class="block text-sm font-bold text-indigo-900 mb-1">ราคาที่ผู้รับจ้างเสนอรวม (บาท)</label>
-                        <input type="number" step="0.01" id="totalOfferedPrice" value="4650000" oninput="calculateAll()" onchange="calculateAll()" class="w-full p-2.5 border border-indigo-300 rounded-lg focus:ring-2 focus:ring-indigo-500 text-indigo-900 font-bold text-lg">
+                        <label class="block text-sm font-bold text-indigo-900 mb-1">ราคากลางงานก่อสร้าง (บาท)</label>
+                        <input type="number" step="0.01" id="totalMedianPrice" value="25181816.00" oninput="calculateAll()" class="w-full p-2.5 border border-indigo-300 rounded-lg focus:ring-2 focus:ring-indigo-500 text-indigo-900 font-bold text-lg">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-indigo-900 mb-1">วงเงินตามสัญญา (บาท)</label>
+                        <input type="number" step="0.01" id="totalOfferedPrice" value="24800000.00" oninput="calculateAll()" class="w-full p-2.5 border border-indigo-300 rounded-lg focus:ring-2 focus:ring-indigo-500 text-indigo-900 font-bold text-lg">
                     </div>
                     <div>
                         <label class="block text-sm font-bold text-indigo-900 mb-1">เปอร์เซ็นต์ที่ปรับลดลง (10 ตำแหน่ง)</label>
@@ -150,9 +153,9 @@
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b pb-3 mb-4 gap-2">
                     <div>
                         <h2 class="text-lg font-bold text-indigo-800 flex items-center gap-2">
-                            <i class="fa-solid fa-list-check text-indigo-600"></i> 2. บัญชีแสดงรายการปริมาณงานและราคากลาง (BOQ)
+                            <i class="fa-solid fa-list-check text-indigo-600"></i> 2. บัญชีแสดงรายการปริมาณงานและราคาที่ปรับลดลง (BOQ)
                         </h2>
-                        <p class="text-xs text-gray-500">ใส่ราคากลางของแต่ละรายการ ระบบจะนำเปอร์เซ็นต์ปรับลด 10 ตำแหน่งมาคูณเพื่อได้ราคาปรับลดให้อัตโนมัติ (ทศนิยม 2 ตำแหน่ง)</p>
+                        <p class="text-xs text-gray-500">สามารถกรอกลำดับ, รายการ, หน่วย, จำนวน, และราคากลาง เพื่อให้ระบบคำนวณราคาที่ปรับลดตามคำเสนอให้อัตโนมัติ</p>
                     </div>
                     <button onclick="addBoqRow()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1.5 rounded-lg text-sm font-medium flex items-center gap-1.5 transition">
                         <i class="fa-solid fa-plus"></i> เพิ่มรายการ
@@ -164,15 +167,14 @@
                     <table class="w-full text-left text-sm border-collapse" id="boqInputTable">
                         <thead>
                             <tr class="bg-gray-100 border-b border-gray-300 text-gray-700">
-                                <th class="p-2.5 w-12 text-center">ลำดับ</th>
-                                <th class="p-2.5 min-w-[200px]">รายการงานก่อสร้าง</th>
+                                <th class="p-2.5 w-24 text-center">ลำดับที่</th>
+                                <th class="p-2.5 min-w-[250px]">รายการ</th>
                                 <th class="p-2.5 w-20 text-center">หน่วย</th>
-                                <th class="p-2.5 w-24 text-center">ปริมาณ</th>
+                                <th class="p-2.5 w-24 text-center">จำนวน</th>
                                 <th class="p-2.5 w-32 text-right bg-amber-50">ราคากลาง/หน่วย</th>
                                 <th class="p-2.5 w-36 text-right bg-amber-50">จำนวนเงินราคากลาง</th>
-                                <th class="p-2.5 w-32 text-right bg-emerald-50">ราคาเสนอ/หน่วย (ลดแล้ว)</th>
-                                <th class="p-2.5 w-36 text-right bg-emerald-50">จำนวนเงินเสนอ (2 ตำแหน่ง)</th>
-                                <th class="p-2.5 w-32 text-right text-red-600">ส่วนต่างปรับลด (บาท)</th>
+                                <th class="p-2.5 w-36 text-right bg-emerald-50">ราคาที่ปรับลด (ราคา)</th>
+                                <th class="p-2.5 w-36 text-right bg-emerald-50">ราคาต่อหน่วย</th>
                                 <th class="p-2.5 w-12 text-center">ลบ</th>
                             </tr>
                         </thead>
@@ -181,12 +183,11 @@
                         </tbody>
                         <tfoot>
                             <tr class="bg-indigo-50 font-bold text-indigo-900 border-t-2 border-indigo-200">
-                                <td colspan="5" class="p-3 text-right">รวมเงินค่างานทั้งสิ้น (บาท):</td>
+                                <td colspan="4" class="p-3 text-right">วงเงินตามสัญญา (บาท):</td>
                                 <td class="p-3 text-right text-amber-900 font-mono" id="totalMedianCell">0.00</td>
                                 <td class="p-3"></td>
                                 <td class="p-3 text-right text-emerald-900 font-mono" id="totalOfferedCell">0.00</td>
-                                <td class="p-3 text-right text-base text-red-600 font-mono" id="totalReductionCell">0.00</td>
-                                <td></td>
+                                <td colspan="2"></td>
                             </tr>
                         </tfoot>
                     </table>
@@ -201,12 +202,12 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
                     <div class="bg-blue-50 p-4 rounded-xl border border-blue-200">
-                        <p class="text-xs text-blue-600 font-semibold uppercase">ราคากลางงานก่อสร้างรวม</p>
+                        <p class="text-xs text-blue-600 font-semibold uppercase">ราคากลางงานก่อสร้าง</p>
                         <p class="text-xl font-bold text-blue-900 mt-1" id="summaryMedian">0.00 บาท</p>
                     </div>
 
                     <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-200">
-                        <p class="text-xs text-emerald-600 font-semibold uppercase">ราคาที่ผู้รับจ้างเสนอรวม</p>
+                        <p class="text-xs text-emerald-600 font-semibold uppercase">วงเงินตามสัญญา</p>
                         <p class="text-xl font-bold text-emerald-700 mt-1" id="summaryOffered">0.00 บาท</p>
                     </div>
 
@@ -224,97 +225,57 @@
 
         </div>
 
-        <!-- PRINTABLE FORM SECTION (Sarabun Font - Exact Layout W651) -->
-        <div id="printSection" class="bg-white p-6 sm:p-10 shadow-xl border rounded-xl max-w-6xl mx-auto sarabun text-black text-sm print-container mt-8">
+        <!-- PRINTABLE FORM SECTION (Exact Layout matching standard attached documents) -->
+        <div id="printSection" class="bg-white p-6 sm:p-10 shadow-xl border rounded-xl max-w-5xl mx-auto sarabun text-black text-sm print-container mt-8">
             
             <!-- Document Header Title -->
-            <div class="text-center mb-3">
-                <h3 class="text-base font-bold mb-0.5">แบบบัญชีแสดงรายการปริมาณงานและราคาที่ปรับลดลง (BOQ)</h3>
-                <p class="text-xs text-gray-800 font-semibold">ประเภทงาน: <span id="printWorkType" class="underline">งานอาคาร</span></p>
-                <p class="text-xs text-gray-800">แนบท้ายสัญญาจ้าง / บันทึกความตกลงแก้ไขเพิ่มเติมสัญญา ตามหนังสือด่วนที่สุด ที่ กค (กวจ) 0405.3/ว 651 ลงวันที่ 26 กันยายน 2568</p>
+            <div class="text-center mb-4">
+                <h3 class="text-base font-bold mb-0.5">แบบแสดงรายการ ปริมาณงาน และราคา</h3>
+                <p class="text-xs font-semibold">เอกสารแนบท้ายสัญญาจ้างก่อสร้าง : <span id="printWorkType">งานก่อสร้างอาคาร</span></p>
+                <p class="text-xs">เลขที่ <span id="printContractNo" class="underline">1/2568</span> ลงวันที่ <span id="printContractDate" class="underline">30 กันยายน 2568</span></p>
+                <p class="text-xs">โครงการงานก่อสร้าง...<span id="printProjectName">งานก่อสร้างอาคารสำนักงานกรมกก่อไก่</span>... เลขที่โครงการ...<span id="printProjectNo">68049099091</span>...</p>
             </div>
 
             <!-- Header Info Details -->
-            <div class="border border-black p-2.5 mb-3 text-xs leading-relaxed">
-                <div class="grid grid-cols-2 gap-x-4 gap-y-1">
-                    <div><strong>โครงการ:</strong> <span id="printProjectName">-</span></div>
-                    <div><strong>สัญญา/ข้อตกลงเลขที่:</strong> <span id="printContractNo">-</span></div>
-                    <div><strong>ผู้ว่าจ้าง:</strong> <span id="printEmployerName">-</span></div>
-                    <div><strong>ผู้รับจ้าง:</strong> <span id="printContractorName">-</span></div>
-                    <div><strong>วันที่ทำสัญญา:</strong> <span id="printContractDate">-</span></div>
-                    <div><strong>ประเภทงานก่อสร้าง:</strong> <span id="printWorkTypeDetail">-</span></div>
-                    <div><strong>ราคากลางรวม:</strong> <span id="printMedianAmount">-</span> บาท</div>
-                    <div><strong>ราคาเสนอรวมสัญญา:</strong> <span id="printOfferedAmount">-</span> บาท</div>
-                    <div class="col-span-2"><strong>เปอร์เซ็นต์ปรับลดตามหลักเกณฑ์ (10 ตำแหน่ง):</strong> <span id="printPercent10" class="font-mono font-bold">-</span> %</div>
+            <div class="mb-4 text-xs leading-relaxed max-w-md">
+                <div class="grid grid-cols-12 gap-y-1">
+                    <div class="col-span-5 font-medium">หน่วยงานเจ้าของโครงการ</div>
+                    <div class="col-span-7"><span id="printEmployerName">กรมกก่อไก่</span></div>
+
+                    <div class="col-span-5 font-medium">วงเงินงบประมาณ</div>
+                    <div class="col-span-7"><span id="printBudgetAmount">27,000,000.00</span> บาท</div>
+
+                    <div class="col-span-5 font-medium">ราคากลางงานก่อสร้าง</div>
+                    <div class="col-span-7"><span id="printMedianAmount">25,181,816.00</span> บาท</div>
+
+                    <div class="col-span-5 font-medium">วงเงินตามสัญญา</div>
+                    <div class="col-span-7"><span id="printOfferedAmount">24,800,000.00</span> บาท</div>
+
+                    <div class="col-span-5 font-medium">ชื่อผู้รับจ้าง</div>
+                    <div class="col-span-7"><span id="printContractorName">บริษัท ก่อสร้างอาคาร จำกัด</span></div>
                 </div>
             </div>
 
-            <!-- BOQ Printable Table - Standard W651 Format -->
-            <div class="mb-3 overflow-x-auto">
+            <!-- BOQ Printable Table - Standard W651 Format matching image attachments exactly -->
+            <div class="mb-4 overflow-x-auto">
                 <table class="w-full text-xs border-collapse border border-black text-center">
                     <thead>
-                        <tr class="bg-gray-100">
-                            <th rowspan="2" class="border border-black p-1 w-8">ลำดับ</th>
-                            <th rowspan="2" class="border border-black p-1 text-left">รายการ</th>
-                            <th rowspan="2" class="border border-black p-1 w-10">หน่วย</th>
-                            <th rowspan="2" class="border border-black p-1 w-12">จำนวน</th>
-                            <th colspan="2" class="border border-black p-1">ราคากลางงานก่อสร้าง</th>
-                            <th colspan="2" class="border border-black p-1">ราคาที่ผู้รับจ้างเสนอ (ปรับลด 10 ตำแหน่ง)</th>
-                            <th rowspan="2" class="border border-black p-1 w-24">จำนวนเงินที่ปรับลด (บาท)</th>
+                        <tr class="bg-gray-50">
+                            <th rowspan="2" class="border border-black p-1.5 w-14 font-semibold">ลำดับที่</th>
+                            <th rowspan="2" class="border border-black p-1.5 text-center font-semibold">รายการ</th>
+                            <th rowspan="2" class="border border-black p-1.5 w-14 font-semibold">หน่วย</th>
+                            <th rowspan="2" class="border border-black p-1.5 w-16 font-semibold">จำนวน</th>
+                            <th colspan="2" class="border border-black p-1 font-semibold">ราคาที่ปรับลดตามคำเสนอ (บาท)</th>
                         </tr>
-                        <tr class="bg-gray-100">
-                            <th class="border border-black p-1 w-20">ราคา/หน่วย</th>
-                            <th class="border border-black p-1 w-24">จำนวนเงิน</th>
-                            <th class="border border-black p-1 w-24">ราคา/หน่วย (บาท)</th>
-                            <th class="border border-black p-1 w-24">จำนวนเงิน (บาท)</th>
+                        <tr class="bg-gray-50">
+                            <th class="border border-black p-1 w-28 font-semibold">ราคา</th>
+                            <th class="border border-black p-1 w-28 font-semibold">ราคาต่อหน่วย</th>
                         </tr>
                     </thead>
                     <tbody id="printBoqBody">
-                        <!-- Dynamic BOQ rows -->
+                        <!-- Dynamic BOQ rows generated via JavaScript -->
                     </tbody>
-                    <tfoot>
-                        <tr class="font-bold bg-gray-50">
-                            <td colspan="4" class="border border-black p-1.5 text-right">รวมเงินทั้งสิ้น:</td>
-                            <td colspan="2" class="border border-black p-1.5 text-right font-mono" id="printTotalMedianSum">0.00</td>
-                            <td colspan="2" class="border border-black p-1.5 text-right font-mono" id="printTotalOfferedSum">0.00</td>
-                            <td class="border border-black p-1.5 text-right text-red-700 font-mono" id="printTotalDiffSum">0.00</td>
-                        </tr>
-                    </tfoot>
                 </table>
-            </div>
-
-            <!-- Financial & Calculation Summary Box -->
-            <div class="border border-black p-2.5 rounded mb-4 text-xs space-y-1 bg-gray-50">
-                <div class="flex justify-between">
-                    <span>1. ราคากลางงานก่อสร้างรวมทั้งสิ้น (<span id="printWorkTypeSummary">งานอาคาร</span>):</span>
-                    <span class="font-semibold"><span id="printSummaryMedianBox">0.00</span> บาท</span>
-                </div>
-                <div class="flex justify-between">
-                    <span>2. ราคาที่ผู้รับจ้างเสนอรวมทั้งสิ้น:</span>
-                    <span class="font-semibold"><span id="printSummaryOfferedBox">0.00</span> บาท</span>
-                </div>
-                <div class="flex justify-between text-indigo-900">
-                    <span>3. เปอร์เซ็นต์ที่ปรับลดลงตามสูตรหลักเกณฑ์ ว 651 (ทศนิยม 10 ตำแหน่ง):</span>
-                    <span class="font-semibold font-mono"><span id="printSummaryPercentBox">0.0000000000</span> %</span>
-                </div>
-                <div class="flex justify-between text-red-700 font-bold border-t border-gray-300 pt-1">
-                    <span>4. รวมจำนวนเงินค่างานที่ปรับลดลงสุทธิ (ปัดเศษ 2 ตำแหน่ง):</span>
-                    <span class="underline double"><span id="printSummaryReducBox">0.00</span> บาท</span>
-                </div>
-            </div>
-
-            <!-- Signatures Section -->
-            <div class="mt-6 pt-2 text-xs grid grid-cols-2 gap-8 text-center leading-loose">
-                <div>
-                    <p>ลงชื่อ..........................................................ผู้ว่าจ้าง</p>
-                    <p>(<span id="printSignEmployer">..........................................................</span>)</p>
-                    <p>ตำแหน่ง..........................................................</p>
-                </div>
-                <div>
-                    <p>ลงชื่อ..........................................................ผู้รับจ้าง</p>
-                    <p>(<span id="printSignContractor">..........................................................</span>)</p>
-                    <p>ตำแหน่ง..........................................................</p>
-                </div>
             </div>
 
         </div>
@@ -323,15 +284,41 @@
 
     <!-- JavaScript logic -->
     <script>
-        // Sample initial BOQ items (รายการก่อสร้าง และราคากลาง/หน่วย)
+        // Initial sample data based on attached standard documents
         let boqItems = [
-            { id: 1, name: 'งานเทคอนกรีตพื้นโครงสร้างชั้นล่าง', unit: 'ตร.ม.', qty: 120, medianRate: 450 },
-            { id: 2, name: 'งานติดตั้งฝ้าเพดานยิปซัมบอร์ด', unit: 'ตร.ม.', qty: 80, medianRate: 320 },
-            { id: 3, name: 'งานทาสีอาคารภายนอกชนิดพิเศษ', unit: 'เหมา', qty: 1, medianRate: 45000 }
+            { id: 1, no: '1', name: 'งานก่อสร้างอาคาร', unit: '', qty: '', medianRate: 0, isHeader: true },
+            { id: 2, no: '1.1', name: 'งานโครงสร้างวิศวกรรม', unit: '', qty: '', medianRate: 0, isHeader: true },
+            { id: 3, no: '', name: 'งานโครงสร้างหลังคา ผนังกันสาดเหล็ก ประกอบติดตั้ง ทาสี', unit: '', qty: '', medianRate: 0, isHeader: true },
+            { id: 4, no: '', name: '- เสาเหล็กกล่อง 100*100 หนา 3.2 มม. (ท่อน/6 ม.)', unit: 'ท่อน', qty: 100, medianRate: 62890 },
+            { id: 5, no: '', name: '- คอนกรีตฐานราก เสา ทาสี', unit: 'ต้น', qty: 50, medianRate: 25140 },
+            { id: 6, no: '', name: '- หลังคาแผ่นโปร่งแสง โพลีคาร์บอเนต SOLID กว้าง 1.22ม. หนา 3 มม. ยาว 8.95 ม. จำนวน 4 แผ่น ยาว 3.65 ม.จำนวน 1 แผ่น', unit: 'ม.', qty: 80, medianRate: 12586 },
+            { id: 7, no: '', name: '- ค่าแรงติดตั้งหลังคาแผ่นโปร่งแสง โพลีคาร์บอเนต SOLID', unit: 'ม.', qty: 80, medianRate: 157.28 },
+            { id: 8, no: '', name: 'งานติดตั้งแผ่นหลังคา Metalsheet', unit: '', qty: '', medianRate: 0, isHeader: true },
+            { id: 9, no: '', name: '- แผ่นปิดครอบชนผนัง ขนาดไม่เกิน G<457', unit: 'ม.', qty: 80, medianRate: 3145.90 },
+            { id: 10, no: '', name: '- แผ่นโปร่งแสง Skilight ลอน 760-30 หนา 1.50 สีขาวขุ่นยาว 3.10 เมตร จำนวน 6 แผ่น', unit: 'ม.', qty: 40, medianRate: 6291.80 },
+            { id: 11, no: '', name: '- อุปกรณ์ติดตั้ง สกรูยึดลอน 50 มม. Class 3 อย่างดี', unit: 'ตร.ม.', qty: 100, medianRate: 125.83 },
+            { id: 12, no: '', name: '- โดมอลูมิเนียม (สำหรับแผ่นโปร่งแสง)', unit: 'ตัว', qty: 100, medianRate: 125.83 },
+            { id: 13, no: 'subtotal_1.1', name: 'รวมค่างานโครงสร้างวิศวกรรม', unit: '', qty: '', medianRate: 0, isSummary: true },
+            { id: 14, no: '1.2', name: 'งานสถาปัตยกรรม', unit: '', qty: '', medianRate: 0, isHeader: true },
+            { id: 15, no: '', name: '- แผงกันหน้าห้องควบคุมไฟฟ้าพร้อมประตู', unit: 'ชุด', qty: 100, medianRate: 50332.20 },
+            { id: 16, no: '', name: '- ติดตั้งบานเกล็ดระบายอากาศ (ขนาด 70*80 ซม.)', unit: 'ชุด', qty: 50, medianRate: 25140 },
+            { id: 17, no: '', name: '- ทาสีรัวเดิม (กันระหว่างโรงเรียนกับสำนักงานสรรพามิตพื้นที่สงขลา)', unit: 'ตร.ม.', qty: 200, medianRate: 3145.90 },
+            { id: 18, no: 'subtotal_1.2', name: 'รวมค่างานสถาปัตยกรรม', unit: '', qty: '', medianRate: 0, isSummary: true },
+            { id: 19, no: 'total_building', name: 'รวม งานก่อสร้างอาคาร', unit: '', qty: '', medianRate: 0, isSummary: true },
+            { id: 20, no: '2', name: 'งานครุภัณฑ์จัดซื้อ', unit: '', qty: '', medianRate: 0, isHeader: true },
+            { id: 21, no: '2.1', name: 'โต๊ะ', unit: 'ตัว', qty: 50, medianRate: 42770.00 },
+            { id: 22, no: '2.2', name: 'เก้าอี้', unit: 'ตัว', qty: 50, medianRate: 32077.00 },
+            { id: 23, no: 'subtotal_2', name: 'รวม งานครุภัณฑ์จัดซื้อ', unit: '', qty: '', medianRate: 0, isSummary: true },
+            { id: 24, no: '3', name: 'ค่าใช้จ่ายพิเศษตามข้อกำหนด', unit: '', qty: '', medianRate: 0, isHeader: true },
+            { id: 25, no: '3.1', name: 'ค่าใช้จ่ายสำหรับอุปกรณ์เครื่องจักรกลพิเศษในงานก่อสร้าง', unit: 'งาน', qty: 1, medianRate: 507700.00 },
+            { id: 26, no: '3.2', name: 'ค่าใช้จ่ายที่เกิดจากการกำหนดให้ใช้สั่งงานพิเศษ', unit: 'งาน', qty: 1, medianRate: 507700.00 },
+            { id: 27, no: 'subtotal_3', name: 'รวม ค่าใช้จ่ายพิเศษตามข้อกำหนด', unit: '', qty: '', medianRate: 0, isSummary: true },
+            { id: 28, no: 'grand_total', name: 'วงเงินตามสัญญา', unit: '', qty: '', medianRate: 0, isSummary: true }
         ];
 
         // Format Currency Helper (2 Decimal places)
         function formatMoney(num) {
+            if (num === null || num === undefined || isNaN(num) || num === '') return '';
             return new Number(num).toLocaleString('th-TH', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         }
 
@@ -340,7 +327,7 @@
             if (!dateStr) return '-';
             const d = new Date(dateStr);
             if (isNaN(d.getTime())) return dateStr;
-            const thMonths = ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'];
+            const thMonths = ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'];
             return `${d.getDate()} ${thMonths[d.getMonth()]} ${d.getFullYear() + 543}`;
         }
 
@@ -352,47 +339,45 @@
             const medianTotalSum = parseFloat(document.getElementById('totalMedianPrice').value) || 0;
             const offeredTotalSum = parseFloat(document.getElementById('totalOfferedPrice').value) || 0;
             
-            // สูตรคำนวณ % ปรับลดความละเอียด 10 ตำแหน่ง
             let reductionRatio10 = 0;
             if (medianTotalSum > 0 && offeredTotalSum > 0) {
                 reductionRatio10 = (medianTotalSum - offeredTotalSum) / medianTotalSum;
             }
 
             boqItems.forEach((item, index) => {
-                const medianTotal = item.qty * item.medianRate;
+                const qtyVal = parseFloat(item.qty) || 0;
+                const medianRateVal = parseFloat(item.medianRate) || 0;
+                const medianTotal = qtyVal * medianRateVal;
                 
-                // 1. คูณด้วย % ปรับลด (10 ตำแหน่ง) แล้วปัดทศนิยม 2 ตำแหน่ง
-                const offeredRate = item.medianRate * (1 - reductionRatio10);
-                const offeredTotal = Math.round((item.qty * offeredRate) * 100) / 100; // ทศนิยม 2 ตำแหน่ง
-                const diffTotal = Math.max(0, medianTotal - offeredTotal);
+                const offeredRate = medianRateVal * (1 - reductionRatio10);
+                const offeredTotal = Math.round((qtyVal * offeredRate) * 100) / 100;
 
                 const tr = document.createElement('tr');
                 tr.className = "hover:bg-gray-50 border-b border-gray-200";
                 tr.innerHTML = `
-                    <td class="p-2 text-center font-medium text-gray-500">${index + 1}</td>
-                    <td class="p-2">
-                        <input type="text" value="${item.name}" oninput="updateBoqItem(${item.id}, 'name', this.value)" class="w-full p-1.5 border border-gray-300 rounded focus:ring-1 focus:ring-indigo-500">
+                    <td class="p-2 text-center font-medium">
+                        <input type="text" value="${item.no || ''}" oninput="updateBoqItem(${item.id}, 'no', this.value)" class="w-full p-1 border border-gray-300 rounded text-center">
                     </td>
                     <td class="p-2">
-                        <input type="text" value="${item.unit}" oninput="updateBoqItem(${item.id}, 'unit', this.value)" class="w-full p-1.5 border border-gray-300 rounded text-center focus:ring-1 focus:ring-indigo-500">
+                        <input type="text" value="${item.name || ''}" oninput="updateBoqItem(${item.id}, 'name', this.value)" class="w-full p-1 border border-gray-300 rounded ${item.isHeader ? 'font-bold' : ''}">
                     </td>
                     <td class="p-2">
-                        <input type="number" value="${item.qty}" oninput="updateBoqItem(${item.id}, 'qty', this.value)" class="w-full p-1.5 border border-gray-300 rounded text-center focus:ring-1 focus:ring-indigo-500">
+                        <input type="text" value="${item.unit || ''}" oninput="updateBoqItem(${item.id}, 'unit', this.value)" class="w-full p-1 border border-gray-300 rounded text-center">
+                    </td>
+                    <td class="p-2">
+                        <input type="text" value="${item.qty !== '' ? item.qty : ''}" oninput="updateBoqItem(${item.id}, 'qty', this.value)" class="w-full p-1 border border-gray-300 rounded text-center">
                     </td>
                     <td class="p-2 bg-amber-50">
-                        <input type="number" step="0.01" value="${item.medianRate}" oninput="updateBoqItem(${item.id}, 'medianRate', this.value)" class="w-full p-1.5 border border-amber-300 rounded text-right focus:ring-1 focus:ring-amber-500 font-medium">
+                        <input type="number" step="0.01" value="${item.medianRate || ''}" oninput="updateBoqItem(${item.id}, 'medianRate', this.value)" class="w-full p-1 border border-amber-300 rounded text-right font-medium">
                     </td>
                     <td class="p-2 text-right font-medium text-amber-900 bg-amber-50 font-mono">
-                        ${formatMoney(medianTotal)}
-                    </td>
-                    <td class="p-2 text-right font-medium text-emerald-800 bg-emerald-50 font-mono">
-                        ${offeredRate.toFixed(2)}
+                        ${medianTotal > 0 ? formatMoney(medianTotal) : ''}
                     </td>
                     <td class="p-2 text-right font-semibold text-emerald-900 bg-emerald-50 font-mono">
-                        ${formatMoney(offeredTotal)}
+                        ${offeredTotal > 0 ? formatMoney(offeredTotal) : ''}
                     </td>
-                    <td class="p-2 text-right font-semibold text-red-600 font-mono">
-                        ${formatMoney(diffTotal)}
+                    <td class="p-2 text-right font-medium text-emerald-800 bg-emerald-50 font-mono">
+                        ${offeredRate > 0 && item.qty ? offeredRate.toFixed(2) : ''}
                     </td>
                     <td class="p-2 text-center">
                         <button onclick="removeBoqRow(${item.id})" class="text-red-500 hover:text-red-700 p-1">
@@ -411,10 +396,13 @@
             const newId = boqItems.length > 0 ? Math.max(...boqItems.map(i => i.id)) + 1 : 1;
             boqItems.push({
                 id: newId,
-                name: 'รายการงานก่อสร้างใหม่',
+                no: '',
+                name: 'รายการใหม่',
                 unit: 'งาน',
                 qty: 1,
-                medianRate: 0
+                medianRate: 0,
+                isHeader: false,
+                isSummary: false
             });
             renderBoqInputs();
         }
@@ -429,8 +417,10 @@
         function updateBoqItem(id, key, val) {
             const item = boqItems.find(i => i.id === id);
             if (item) {
-                if (['qty', 'medianRate'].includes(key)) {
+                if (['medianRate'].includes(key)) {
                     item[key] = parseFloat(val) || 0;
+                } else if (key === 'qty') {
+                    item[key] = val !== '' ? (parseFloat(val) || val) : '';
                 } else {
                     item[key] = val;
                 }
@@ -443,7 +433,6 @@
             const medianTotalSum = parseFloat(document.getElementById('totalMedianPrice').value) || 0;
             const offeredTotalSum = parseFloat(document.getElementById('totalOfferedPrice').value) || 0;
 
-            // คำนวณเปอร์เซ็นต์ปรับลด 10 ตำแหน่ง
             let percent10 = 0;
             let reductionRatio10 = 0;
             if (medianTotalSum > 0 && offeredTotalSum <= medianTotalSum) {
@@ -451,101 +440,130 @@
                 percent10 = reductionRatio10 * 100;
             }
 
-            // แสดง % ปรับลดทศนิยม 10 ตำแหน่ง
             document.getElementById('reductionPercent10Digits').value = percent10.toFixed(10) + ' %';
             document.getElementById('summaryPercent10').innerText = percent10.toFixed(10) + ' %';
 
-            // Calculate BOQ Totals
             let totalMedianBOQ = 0;
             let totalOfferedBOQ = 0;
             let totalReductionBOQ = 0;
 
             boqItems.forEach(item => {
-                const medianTotal = item.qty * item.medianRate;
-                const offeredRate = item.medianRate * (1 - reductionRatio10);
-                const offeredTotal = Math.round((item.qty * offeredRate) * 100) / 100; // 2 ตำแหน่ง
-                const diff = Math.max(0, medianTotal - offeredTotal);
+                if (item.qty && item.medianRate) {
+                    const qtyVal = parseFloat(item.qty) || 0;
+                    const medianTotal = qtyVal * item.medianRate;
+                    const offeredRate = item.medianRate * (1 - reductionRatio10);
+                    const offeredTotal = Math.round((qtyVal * offeredRate) * 100) / 100;
+                    const diff = Math.max(0, medianTotal - offeredTotal);
 
-                totalMedianBOQ += medianTotal;
-                totalOfferedBOQ += offeredTotal;
-                totalReductionBOQ += diff;
+                    totalMedianBOQ += medianTotal;
+                    totalOfferedBOQ += offeredTotal;
+                    totalReductionBOQ += diff;
+                }
             });
 
-            // Update UI Summaries
             document.getElementById('totalMedianCell').innerText = formatMoney(totalMedianBOQ);
-            document.getElementById('totalOfferedCell').innerText = formatMoney(totalOfferedBOQ);
-            document.getElementById('totalReductionCell').innerText = formatMoney(totalReductionBOQ);
+            document.getElementById('totalOfferedCell').innerText = formatMoney(offeredTotalSum);
 
             document.getElementById('summaryMedian').innerText = `${formatMoney(medianTotalSum)} บาท`;
             document.getElementById('summaryOffered').innerText = `${formatMoney(offeredTotalSum)} บาท`;
-            document.getElementById('summaryReduction').innerText = `${formatMoney(totalReductionBOQ)} บาท`;
+            document.getElementById('summaryReduction').innerText = `${formatMoney(medianTotalSum - offeredTotalSum)} บาท`;
 
-            // Update Printable View
-            updatePrintView(medianTotalSum, offeredTotalSum, percent10, totalMedianBOQ, totalOfferedBOQ, totalReductionBOQ);
+            updatePrintView(medianTotalSum, offeredTotalSum, percent10);
         }
 
-        // Synchronize values to Printable Preview Form (Exact W651 Layout)
-        function updatePrintView(medianTotalSum, offeredTotalSum, percent10, totalMedianBOQ, totalOfferedBOQ, totalReductionBOQ) {
+        // Synchronize values to Printable Preview Form (Exact match with attached image)
+        function updatePrintView(medianTotalSum, offeredTotalSum, percent10) {
             const selectedWorkType = document.getElementById('workType').value;
-            document.getElementById('printWorkType').innerText = selectedWorkType;
-            document.getElementById('printWorkTypeDetail').innerText = selectedWorkType;
-            document.getElementById('printWorkTypeSummary').innerText = selectedWorkType;
+            
+            const printWorkTypeEls = document.querySelectorAll('#printWorkType');
+            printWorkTypeEls.forEach(el => el.innerText = selectedWorkType);
 
             document.getElementById('printProjectName').innerText = document.getElementById('projectName').value || '-';
-            document.getElementById('printContractNo').innerText = document.getElementById('contractNo').value || '-';
+            document.getElementById('printProjectNo').innerText = document.getElementById('projectNo').value || '-';
+            
+            const contractNoEls = document.querySelectorAll('#printContractNo');
+            contractNoEls.forEach(el => el.innerText = document.getElementById('contractNo').value || '-');
+            
+            const contractDateEls = document.querySelectorAll('#printContractDate');
+            contractDateEls.forEach(el => el.innerText = formatDateThai(document.getElementById('contractDate').value));
+
             document.getElementById('printEmployerName').innerText = document.getElementById('employerName').value || '-';
             document.getElementById('printContractorName').innerText = document.getElementById('contractorName').value || '-';
-            document.getElementById('printContractDate').innerText = formatDateThai(document.getElementById('contractDate').value);
 
+            document.getElementById('printBudgetAmount').innerText = formatMoney(parseFloat(document.getElementById('budgetAmount').value) || 0);
             document.getElementById('printMedianAmount').innerText = formatMoney(medianTotalSum);
             document.getElementById('printOfferedAmount').innerText = formatMoney(offeredTotalSum);
-            document.getElementById('printPercent10').innerText = percent10.toFixed(10);
 
-            // Render Printable BOQ Table Rows (W651 Standard Columns)
             const printBody = document.getElementById('printBoqBody');
             printBody.innerHTML = '';
 
             const reductionRatio10 = medianTotalSum > 0 ? (medianTotalSum - offeredTotalSum) / medianTotalSum : 0;
 
-            boqItems.forEach((item, index) => {
-                const medianTotal = item.qty * item.medianRate;
-                const offeredRate = item.medianRate * (1 - reductionRatio10);
-                const offeredTotal = Math.round((item.qty * offeredRate) * 100) / 100;
-                const diffTotal = Math.max(0, medianTotal - offeredTotal);
+            // Track category sub-totals for calculations
+            let subtotal_1_1 = 0;
+            let subtotal_1_2 = 0;
+            let subtotal_2 = 0;
+            let subtotal_3 = 0;
 
+            boqItems.forEach((item) => {
                 const tr = document.createElement('tr');
                 tr.className = "border-b border-black";
-                tr.innerHTML = `
-                    <td class="border border-black p-1 text-center">${index + 1}</td>
-                    <td class="border border-black p-1 text-left">${item.name}</td>
-                    <td class="border border-black p-1 text-center">${item.unit}</td>
-                    <td class="border border-black p-1 text-center">${item.qty}</td>
+
+                const isHeaderItem = item.isHeader || (!item.qty && !item.isSummary && item.name);
+                const isSummaryItem = item.isSummary || item.no.startsWith('subtotal') || item.no.startsWith('total') || item.no === 'grand_total';
+
+                let priceStr = '';
+                let unitPriceStr = '';
+
+                if (item.qty && item.medianRate) {
+                    const qtyVal = parseFloat(item.qty) || 0;
+                    const offeredRate = item.medianRate * (1 - reductionRatio10);
+                    const offeredTotal = Math.round((qtyVal * offeredRate) * 100) / 100;
                     
-                    <!-- ราคากลาง -->
-                    <td class="border border-black p-1 text-right font-mono">${formatMoney(item.medianRate)}</td>
-                    <td class="border border-black p-1 text-right font-mono font-medium">${formatMoney(medianTotal)}</td>
-                    
-                    <!-- ราคาผู้รับจ้างเสนอ (ปรับลดแล้ว) -->
-                    <td class="border border-black p-1 text-right font-mono">${offeredRate.toFixed(2)}</td>
-                    <td class="border border-black p-1 text-right font-mono font-medium">${formatMoney(offeredTotal)}</td>
-                    
-                    <!-- ส่วนต่างที่ปรับลดลง -->
-                    <td class="border border-black p-1 text-right font-mono font-bold text-black">${formatMoney(diffTotal)}</td>
-                `;
+                    priceStr = formatMoney(offeredTotal);
+                    unitPriceStr = formatMoney(offeredRate);
+
+                    // Add to appropriate section subtotal
+                    if (item.id >= 4 && item.id <= 12) subtotal_1_1 += offeredTotal;
+                    if (item.id >= 15 && item.id <= 17) subtotal_1_2 += offeredTotal;
+                    if (item.id >= 21 && item.id <= 22) subtotal_2 += offeredTotal;
+                    if (item.id >= 25 && item.id <= 26) subtotal_3 += offeredTotal;
+                }
+
+                // Custom handle for summary rows
+                if (item.no === 'subtotal_1.1') priceStr = formatMoney(subtotal_1_1);
+                else if (item.no === 'subtotal_1.2') priceStr = formatMoney(subtotal_1_2);
+                else if (item.no === 'total_building') priceStr = formatMoney(subtotal_1_1 + subtotal_1_2);
+                else if (item.no === 'subtotal_2') priceStr = formatMoney(subtotal_2);
+                else if (item.no === 'subtotal_3') priceStr = formatMoney(subtotal_3);
+                else if (item.no === 'grand_total') priceStr = formatMoney(offeredTotalSum);
+
+                if (isSummaryItem) {
+                    tr.className = "border-b border-black font-bold bg-gray-50";
+                    tr.innerHTML = `
+                        <td class="border border-black p-1 text-center"></td>
+                        <td class="border border-black p-1 text-right font-bold" colspan="3">${item.name}</td>
+                        <td class="border border-black p-1 text-right font-bold font-mono">${priceStr}</td>
+                        <td class="border border-black p-1 text-right"></td>
+                    `;
+                } else if (isHeaderItem) {
+                    tr.className = "border-b border-black font-bold";
+                    tr.innerHTML = `
+                        <td class="border border-black p-1 text-center">${item.no || ''}</td>
+                        <td class="border border-black p-1 text-left font-bold" colspan="5">${item.name}</td>
+                    `;
+                } else {
+                    tr.innerHTML = `
+                        <td class="border border-black p-1 text-center">${item.no || ''}</td>
+                        <td class="border border-black p-1 text-left">${item.name}</td>
+                        <td class="border border-black p-1 text-center">${item.unit || ''}</td>
+                        <td class="border border-black p-1 text-center">${item.qty !== '' ? item.qty : ''}</td>
+                        <td class="border border-black p-1 text-right font-mono">${priceStr}</td>
+                        <td class="border border-black p-1 text-right font-mono">${unitPriceStr}</td>
+                    `;
+                }
                 printBody.appendChild(tr);
             });
-
-            document.getElementById('printTotalMedianSum').innerText = formatMoney(totalMedianBOQ);
-            document.getElementById('printTotalOfferedSum').innerText = formatMoney(totalOfferedBOQ);
-            document.getElementById('printTotalDiffSum').innerText = formatMoney(totalReductionBOQ);
-
-            document.getElementById('printSummaryMedianBox').innerText = formatMoney(medianTotalSum);
-            document.getElementById('printSummaryOfferedBox').innerText = formatMoney(offeredTotalSum);
-            document.getElementById('printSummaryPercentBox').innerText = percent10.toFixed(10);
-            document.getElementById('printSummaryReducBox').innerText = formatMoney(totalReductionBOQ);
-
-            document.getElementById('printSignEmployer').innerText = document.getElementById('employerName').value || '..........................................................';
-            document.getElementById('printSignContractor').innerText = document.getElementById('contractorName').value || '..........................................................';
         }
 
         // Initialize on Load
