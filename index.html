@@ -147,7 +147,7 @@
                     </div>
                     <div>
                         <label class="block text-sm font-bold text-indigo-900 mb-1">เปอร์เซ็นต์ที่ปรับลดลง (10 ตำแหน่ง)</label>
-                        <input type="text" id="reductionPercent10Digits" readonly class="w-full p-2.5 bg-white border border-indigo-300 rounded-lg text-red-600 font-bold text-lg font-mono">
+                        <input type="text" id="reductionPercent10Digits" readonly class="w-full p-2.5 bg-white border border-indigo-300 rounded-lg text-red-600 font-bold text-lg">
                     </div>
                 </div>
             </div>
@@ -187,10 +187,10 @@
                         </tbody>
                         <tfoot>
                             <tr class="bg-indigo-50 font-bold text-indigo-900 border-t-2 border-indigo-200">
-                                <td colspan="4" class="p-3 text-right">วงเงินตามสัญญา (บาท):</td>
-                                <td class="p-3 text-right text-amber-900 font-mono" id="totalMedianCell">0.00</td>
+                                <td colspan="4" class="p-3 text-right">ราคารวม BOQ (บาท):</td>
+                                <td class="p-3 text-right text-amber-900 font-bold" id="totalMedianCell">0.00</td>
                                 <td class="p-3"></td>
-                                <td class="p-3 text-right text-emerald-900 font-mono" id="totalOfferedCell">0.00</td>
+                                <td class="p-3 text-right text-emerald-900 font-bold" id="totalOfferedCell">0.00</td>
                                 <td colspan="2"></td>
                             </tr>
                         </tfoot>
@@ -222,7 +222,7 @@
 
                     <div class="bg-purple-50 p-4 rounded-xl border border-purple-200">
                         <p class="text-xs text-purple-700 font-semibold uppercase">สัดส่วนที่ปรับลดลง (%)</p>
-                        <p class="text-lg font-bold text-purple-900 mt-1 font-mono" id="summaryPercent10">0.0000000000%</p>
+                        <p class="text-lg font-bold text-purple-900 mt-1" id="summaryPercent10">0.0000000000%</p>
                     </div>
                 </div>
             </div>
@@ -335,28 +335,14 @@
             return `${d.getDate()} ${thMonths[d.getMonth()]} ${d.getFullYear() + 543}`;
         }
 
-        // Render BOQ Input Table
+        // Render BOQ Input Table DOM structure once
         function renderBoqInputs() {
             const tbody = document.getElementById('boqTableBody');
             tbody.innerHTML = '';
 
-            const medianTotalSum = parseFloat(document.getElementById('totalMedianPrice').value) || 0;
-            const offeredTotalSum = parseFloat(document.getElementById('totalOfferedPrice').value) || 0;
-            
-            let reductionRatio10 = 0;
-            if (medianTotalSum > 0 && offeredTotalSum > 0) {
-                reductionRatio10 = (medianTotalSum - offeredTotalSum) / medianTotalSum;
-            }
-
-            boqItems.forEach((item, index) => {
-                const qtyVal = parseFloat(item.qty) || 0;
-                const medianRateVal = parseFloat(item.medianRate) || 0;
-                const medianTotal = qtyVal * medianRateVal;
-                
-                const offeredRate = medianRateVal * (1 - reductionRatio10);
-                const offeredTotal = Math.round((qtyVal * offeredRate) * 100) / 100;
-
+            boqItems.forEach((item) => {
                 const tr = document.createElement('tr');
+                tr.id = `boq-row-${item.id}`;
                 tr.className = "hover:bg-gray-50 border-b border-gray-200";
                 tr.innerHTML = `
                     <td class="p-2 text-center font-medium">
@@ -369,19 +355,19 @@
                         <input type="text" value="${item.unit || ''}" oninput="updateBoqItem(${item.id}, 'unit', this.value)" class="w-full p-1 border border-gray-300 rounded text-center">
                     </td>
                     <td class="p-2">
-                        <input type="text" value="${item.qty !== '' ? item.qty : ''}" oninput="updateBoqItem(${item.id}, 'qty', this.value)" class="w-full p-1 border border-gray-300 rounded text-center">
+                        <input type="number" step="any" value="${item.qty !== '' ? item.qty : ''}" oninput="updateBoqItem(${item.id}, 'qty', this.value)" class="w-full p-1 border border-gray-300 rounded text-center font-medium">
                     </td>
                     <td class="p-2 bg-amber-50">
                         <input type="number" step="0.01" value="${item.medianRate || ''}" oninput="updateBoqItem(${item.id}, 'medianRate', this.value)" class="w-full p-1 border border-amber-300 rounded text-right font-medium">
                     </td>
-                    <td class="p-2 text-right font-medium text-amber-900 bg-amber-50 font-mono">
-                        ${medianTotal > 0 ? formatMoney(medianTotal) : ''}
+                    <td class="p-2 text-right font-medium text-amber-900 bg-amber-50 cell-median-total">
+                        0.00
                     </td>
-                    <td class="p-2 text-right font-semibold text-emerald-900 bg-emerald-50 font-mono">
-                        ${offeredTotal > 0 ? formatMoney(offeredTotal) : ''}
+                    <td class="p-2 text-right font-semibold text-emerald-900 bg-emerald-50 cell-offered-total">
+                        0.00
                     </td>
-                    <td class="p-2 text-right font-medium text-emerald-800 bg-emerald-50 font-mono">
-                        ${offeredRate > 0 && item.qty ? offeredRate.toFixed(2) : ''}
+                    <td class="p-2 text-right font-medium text-emerald-800 bg-emerald-50 cell-offered-rate">
+                        0.00
                     </td>
                     <td class="p-2 text-center">
                         <button onclick="removeBoqRow(${item.id})" class="text-red-500 hover:text-red-700 p-1">
@@ -417,14 +403,12 @@
             renderBoqInputs();
         }
 
-        // Update BOQ Item Value
+        // Update BOQ Item Value without re-rendering inputs (smooth focus)
         function updateBoqItem(id, key, val) {
             const item = boqItems.find(i => i.id === id);
             if (item) {
-                if (['medianRate'].includes(key)) {
-                    item[key] = parseFloat(val) || 0;
-                } else if (key === 'qty') {
-                    item[key] = val !== '' ? (parseFloat(val) || val) : '';
+                if (key === 'medianRate' || key === 'qty') {
+                    item[key] = val !== '' ? (parseFloat(val) || 0) : '';
                 } else {
                     item[key] = val;
                 }
@@ -432,7 +416,7 @@
             calculateAll();
         }
 
-        // Calculate All Totals & 10-Digit Percentage
+        // Calculate All Totals & Update Calculated Cells Only
         function calculateAll() {
             const medianTotalSum = parseFloat(document.getElementById('totalMedianPrice').value) || 0;
             const offeredTotalSum = parseFloat(document.getElementById('totalOfferedPrice').value) || 0;
@@ -449,24 +433,37 @@
 
             let totalMedianBOQ = 0;
             let totalOfferedBOQ = 0;
-            let totalReductionBOQ = 0;
 
             boqItems.forEach(item => {
-                if (item.qty && item.medianRate) {
-                    const qtyVal = parseFloat(item.qty) || 0;
-                    const medianTotal = qtyVal * item.medianRate;
-                    const offeredRate = item.medianRate * (1 - reductionRatio10);
-                    const offeredTotal = Math.round((qtyVal * offeredRate) * 100) / 100;
-                    const diff = Math.max(0, medianTotal - offeredTotal);
+                const qtyVal = parseFloat(item.qty) || 0;
+                const medianRateVal = parseFloat(item.medianRate) || 0;
+                const medianTotal = qtyVal * medianRateVal;
+                const offeredRate = medianRateVal * (1 - reductionRatio10);
+                const offeredTotal = Math.round((qtyVal * offeredRate) * 100) / 100;
 
+                if (qtyVal && medianRateVal) {
                     totalMedianBOQ += medianTotal;
                     totalOfferedBOQ += offeredTotal;
-                    totalReductionBOQ += diff;
+                }
+
+                // Smooth update specific cell text only
+                const rowEl = document.getElementById(`boq-row-${item.id}`);
+                if (rowEl) {
+                    const medianCell = rowEl.querySelector('.cell-median-total');
+                    const offeredTotalCell = rowEl.querySelector('.cell-offered-total');
+                    const offeredRateCell = rowEl.querySelector('.cell-offered-rate');
+
+                    if (medianCell) medianCell.innerText = medianTotal > 0 ? formatMoney(medianTotal) : '';
+                    if (offeredTotalCell) offeredTotalCell.innerText = offeredTotal > 0 ? formatMoney(offeredTotal) : '';
+                    if (offeredRateCell) offeredRateCell.innerText = offeredRate > 0 && item.qty ? formatMoney(offeredRate) : '';
                 }
             });
 
-            document.getElementById('totalMedianCell').innerText = formatMoney(totalMedianBOQ);
-            document.getElementById('totalOfferedCell').innerText = formatMoney(offeredTotalSum);
+            // Update real-time table footer
+            const totalMedianEl = document.getElementById('totalMedianCell');
+            const totalOfferedEl = document.getElementById('totalOfferedCell');
+            if (totalMedianEl) totalMedianEl.innerText = formatMoney(totalMedianBOQ);
+            if (totalOfferedEl) totalOfferedEl.innerText = formatMoney(totalOfferedBOQ);
 
             document.getElementById('summaryMedian').innerText = `${formatMoney(medianTotalSum)} บาท`;
             document.getElementById('summaryOffered').innerText = `${formatMoney(offeredTotalSum)} บาท`;
@@ -475,7 +472,7 @@
             updatePrintView(medianTotalSum, offeredTotalSum, percent10);
         }
 
-        // Synchronize values to Printable Preview Form (Exact match with attached image)
+        // Synchronize values to Printable Preview Form
         function updatePrintView(medianTotalSum, offeredTotalSum, percent10) {
             const selectedWorkType = document.getElementById('workType').value;
             
@@ -503,7 +500,6 @@
 
             const reductionRatio10 = medianTotalSum > 0 ? (medianTotalSum - offeredTotalSum) / medianTotalSum : 0;
 
-            // Track category sub-totals for calculations
             let subtotal_1_1 = 0;
             let subtotal_1_2 = 0;
             let subtotal_2 = 0;
@@ -521,20 +517,19 @@
 
                 if (item.qty && item.medianRate) {
                     const qtyVal = parseFloat(item.qty) || 0;
-                    const offeredRate = item.medianRate * (1 - reductionRatio10);
+                    const medianRateVal = parseFloat(item.medianRate) || 0;
+                    const offeredRate = medianRateVal * (1 - reductionRatio10);
                     const offeredTotal = Math.round((qtyVal * offeredRate) * 100) / 100;
                     
                     priceStr = formatMoney(offeredTotal);
                     unitPriceStr = formatMoney(offeredRate);
 
-                    // Add to appropriate section subtotal
                     if (item.id >= 4 && item.id <= 12) subtotal_1_1 += offeredTotal;
                     if (item.id >= 15 && item.id <= 17) subtotal_1_2 += offeredTotal;
                     if (item.id >= 21 && item.id <= 22) subtotal_2 += offeredTotal;
                     if (item.id >= 25 && item.id <= 26) subtotal_3 += offeredTotal;
                 }
 
-                // Custom handle for summary rows
                 if (item.no === 'subtotal_1.1') priceStr = formatMoney(subtotal_1_1);
                 else if (item.no === 'subtotal_1.2') priceStr = formatMoney(subtotal_1_2);
                 else if (item.no === 'total_building') priceStr = formatMoney(subtotal_1_1 + subtotal_1_2);
@@ -547,7 +542,7 @@
                     tr.innerHTML = `
                         <td class="border border-black p-1 text-center"></td>
                         <td class="border border-black p-1 text-right font-bold" colspan="3">${item.name}</td>
-                        <td class="border border-black p-1 text-right font-bold font-mono">${priceStr}</td>
+                        <td class="border border-black p-1 text-right font-bold">${priceStr}</td>
                         <td class="border border-black p-1 text-right"></td>
                     `;
                 } else if (isHeaderItem) {
@@ -562,8 +557,8 @@
                         <td class="border border-black p-1 text-left">${item.name}</td>
                         <td class="border border-black p-1 text-center">${item.unit || ''}</td>
                         <td class="border border-black p-1 text-center">${item.qty !== '' ? item.qty : ''}</td>
-                        <td class="border border-black p-1 text-right font-mono">${priceStr}</td>
-                        <td class="border border-black p-1 text-right font-mono">${unitPriceStr}</td>
+                        <td class="border border-black p-1 text-right">${priceStr}</td>
+                        <td class="border border-black p-1 text-right">${unitPriceStr}</td>
                     `;
                 }
                 printBody.appendChild(tr);
